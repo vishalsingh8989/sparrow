@@ -315,6 +315,7 @@ public class Scheduler {
     List<TTaskSpec> tasks = request.getTasks();
     Set<InetSocketAddress> backends = state.getBackends(app);
     LOG.debug("NumBackends: " + backends.size());
+    LOG.debug("NumBackends info: " + backends.toArray());
     boolean constrained = false;
     for (TTaskSpec task : tasks) {
       constrained = constrained || (

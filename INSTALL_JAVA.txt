@@ -1,0 +1,50 @@
+************************************************************************
+************************************************************************
+Step 1: Uninstall all other java.
+
+1. dpkg-query -W -f='${binary:Package}\n' | grep -E -e '^(ia32-)?(sun|oracle)-java' -e '^openjdk-' -e '^icedtea' -e '^(default|gcj)-j(re|dk)' -e '^gcj-(.*)-j(re|dk)' -e '^java-common' | xargs sudo apt-get -y remove
+   sudo apt-get -y autoremove
+
+2. dpkg -l | grep ^rc | awk '{print($2)}' | xargs sudo apt-get -y purge
+
+3. sudo bash -c 'ls -d /home/*/.java' | xargs sudo rm -rf
+
+4. sudo rm -rf /usr/lib/jvm/*
+
+5. for g in ControlPanel java java_vm javaws jcontrol jexec keytool mozilla-javaplugin.so orbd pack200 policytool rmid rmiregistry servertool tnameserv unpack200 appletviewer apt extcheck HtmlConverter idlj jar jarsigner javac javadoc javah javap jconsole jdb jhat jinfo jmap jps jrunscript jsadebugd jstack jstat jstatd native2ascii rmic schemagen serialver wsgen wsimport xjc xulrunner-1.9-javaplugin.so; do sudo update-alternatives --remove-all $g; done
+
+6. sudo updatedb
+   sudo locate -b '\pack200'
+
+   If the command above produces any output like /path/to/jre1.6.0_34/bin/pack200 remove the directory that is parent of bin, like this: sudo rm -rf /path/to/jre1.6.0_34
+
+
+************************************************************************
+************************************************************************
+Step 2: Install java.
+
+
+1. sudo tar xvzf jdk-8u5-linux-i586.tar.gz -C /usr/java
+
+2. JAVA_HOME=/usr/java/jdk1.8.0_05/  -->  also copy to /etc/environment file
+3. sudo update-alternatives --install /usr/bin/java java ${JAVA_HOME%*/}/bin/java 20000
+4. sudo update-alternatives --install /usr/bin/javac javac ${JAVA_HOME%*/}/bin/javac 20000
+
+5. update-alternatives --config java
+
+6. There are 2 choices for the alternative java (providing /usr/bin/java).
+
+      Selection    Path                                           Priority   Status
+    ------------------------------------------------------------
+    * 0            /opt/java/jdk1.8.0_05/bin/java                  20000     auto mode
+      1            /opt/java/jdk1.8.0_05/bin/java                  20000     manual mode
+      2            /usr/lib/jvm/java-6-openjdk-i386/jre/bin/java   1061      manual mode
+
+    Press enter to keep the current choice[*], or type selection number:
+
+7.  java -version
+
+
+8.  sudo dpkg --add-architecture i386
+9.  sudo apt-get update
+10. sudo apt-get install libc6-i386

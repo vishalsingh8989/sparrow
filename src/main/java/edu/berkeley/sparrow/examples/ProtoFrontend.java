@@ -64,7 +64,7 @@ public class ProtoFrontend implements FrontendService.Iface {
 
   // Type of benchmark to run, see ProtoBackend static constant for benchmark types
   public static final int DEFAULT_TASK_BENCHMARK = ProtoBackend.BENCHMARK_TYPE_FP_CPU;
-  public static final int DEFAULT_BENCHMARK_ITERATIONS = 1000;  // # of benchmark iterations
+  public static final int DEFAULT_BENCHMARK_ITERATIONS = 10;  // # of benchmark iterations
 
   /**
    * The default number of preferred nodes for each task (this configuration simulates jobs
