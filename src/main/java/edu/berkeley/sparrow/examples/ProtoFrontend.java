@@ -292,7 +292,10 @@ public class ProtoFrontend implements FrontendService.Iface {
     double mostRecentLaunch = System.currentTimeMillis();
     long end = System.currentTimeMillis() + launch_duration_s * 1000;
     int userIndex = 0; // Used to determine which user's task to run next.
-    while (System.currentTimeMillis() < end) {
+
+    int idx = 0;
+    while(idx <  4){
+    //while (System.currentTimeMillis() < end) {
       // Lambda is the arrival rate in S, so we need to multiply the result here by
       // 1000 to convert to ms.
       double delay = 1000 / lambda;
@@ -327,6 +330,7 @@ public class ProtoFrontend implements FrontendService.Iface {
       double launchRate = (double) launched * 1000.0 /
           (System.currentTimeMillis() - startTime);
       LOG.debug("Aggregate launch rate: " + launchRate);
+      idx++;
     }
   }
 
