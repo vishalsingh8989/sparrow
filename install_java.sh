@@ -18,11 +18,11 @@ sudo locate -b '\pack200'
 
 
 
-sudo tar xvzf jdk-8u5-linux-i586.tar.gz -C /usr/java
 mkdir /usr/java
-JAVA_HOME=/usr/java/jdk1.8.0_05/  -->  also copy to /etc/environment file
+sudo tar xvzf jdk-7u80-linux-i586.tar.gz -C /usr/java
+JAVA_HOME=/usr/java/jdk1.7.0_80/
 
-echo "JAVA_HOME=/usr/java/jdk1.8.0_05/" >> --> /etc/environment
+echo "JAVA_HOME=/usr/java/jdk1.8.0_05/" >> /etc/environment
 sudo update-alternatives --install /usr/bin/java java ${JAVA_HOME%*/}/bin/java 20000
 sudo update-alternatives --install /usr/bin/javac javac ${JAVA_HOME%*/}/bin/javac 20000
 
