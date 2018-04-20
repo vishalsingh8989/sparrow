@@ -59,12 +59,12 @@ public class ProtoFrontend implements FrontendService.Iface {
   /** Amount of time to launch tasks for (not including the warmup period). */
   public static final int DEFAULT_EXPERIMENT_S = 300;
 
-  public static final double DEFAULT_JOB_ARRIVAL_RATE_S = 10; // Jobs/second
+  public static final double DEFAULT_JOB_ARRIVAL_RATE_S = 1; // Jobs/second
   public static final int DEFAULT_TASKS_PER_JOB = 1;          // Tasks/job
 
   // Type of benchmark to run, see ProtoBackend static constant for benchmark types
   public static final int DEFAULT_TASK_BENCHMARK = ProtoBackend.BENCHMARK_TYPE_FP_CPU;
-  public static final int DEFAULT_BENCHMARK_ITERATIONS = 10;  // # of benchmark iterations
+  public static final int DEFAULT_BENCHMARK_ITERATIONS = 1;  // # of benchmark iterations
 
   /**
    * The default number of preferred nodes for each task (this configuration simulates jobs
