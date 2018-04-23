@@ -100,11 +100,13 @@ public class ProtoFrontend implements FrontendService.Iface {
     private List<TTaskSpec> request;
     private SparrowFrontendClient client;
     UserInfo user;
+    double probe_ratio;
 
-    public JobLaunchRunnable(List<TTaskSpec> request, UserInfo user, SparrowFrontendClient client) {
+    public JobLaunchRunnable(List<TTaskSpec> request, UserInfo user, SparrowFrontendClient client, double probe_ratio) {
       this.request = request;
       this.client = client;
       this.user = user;
+      this.probe_ratio = probe_ratio;
     }
 
     @Override
@@ -112,7 +114,8 @@ public class ProtoFrontend implements FrontendService.Iface {
       long start = System.currentTimeMillis();
       TUserGroupInfo userInfo = new TUserGroupInfo(user.user, "*", user.priority);
       try {
-        client.submitJob(APPLICATION_ID, request, userInfo);
+        LOG.debug("#### RR: setting probe ratio " + probe_ratio + " for request :" + request);
+        client.submitJob(APPLICATION_ID, request, userInfo, probe_ratio);
         LOG.debug("Submitted job: " + request + " for user " + userInfo);
       } catch (TException e) {
         LOG.error("Scheduling request failed!", e);
@@ -140,7 +143,23 @@ public class ProtoFrontend implements FrontendService.Iface {
       this.totalTasksLaunched = 0;
     }
   }
-
+  
+  /* RR: For now simple logic is written to change probe ratio
+   * but need to change this by intelligent algo.
+   */
+  public double get_probe_ratio(int jobid) {
+    /* Based on job id different probe ratio is sent but need to add
+     * some intelligent logic here. 
+     */
+    if (jobid >= 0 && jobid < 10) {
+        return 2.0;
+    } else if (jobid >= 10 && jobid < 20) {
+        return 1.0;
+    } else if (jobid >= 20 && jobid < 30) {
+        return 2.0;
+    }
+    return 2.0;
+  }
   public List<TTaskSpec> generateJob(int numTasks, int numPreferredNodes, List<String> backends,
                                      int benchmarkId, int benchmarkIterations) {
     // Pack task parameters
@@ -294,7 +313,8 @@ public class ProtoFrontend implements FrontendService.Iface {
     int userIndex = 0; // Used to determine which user's task to run next.
 
     int idx = 0;
-    while(idx <  4){
+    double probe_ratio=2;
+    while(idx <  40){
     //while (System.currentTimeMillis() < end) {
       // Lambda is the arrival rate in S, so we need to multiply the result here by
       // 1000 to convert to ms.
@@ -320,11 +340,11 @@ public class ProtoFrontend implements FrontendService.Iface {
       ++user.totalTasksLaunched;
       LOG.debug("Launching task for user " + user.user + " (" + user.totalTasksLaunched +
           " total tasks launched for this user)");
-
+      probe_ratio = get_probe_ratio(idx);
       Runnable runnable =  new JobLaunchRunnable(
           generateJob(tasksPerJob, numPreferredNodes, backends, benchmarkId,
                       benchmarkIterations),
-          user, client);
+          user, client, probe_ratio);
       new Thread(runnable).start();
       int launched = tasksLaunched.addAndGet(1);
       double launchRate = (double) launched * 1000.0 /
