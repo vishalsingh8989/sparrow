@@ -412,10 +412,10 @@ public class NodeMonitorService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.APP, new org.apache.thrift.meta_data.FieldMetaData("app", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.LISTEN_SOCKET, new org.apache.thrift.meta_data.FieldMetaData("listenSocket", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.APP, new org.apache.thrift.meta_data.FieldMetaData("app", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.LISTEN_SOCKET, new org.apache.thrift.meta_data.FieldMetaData("listenSocket", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(registerBackend_args.class, metaDataMap);
     }
@@ -424,8 +424,8 @@ public class NodeMonitorService {
     }
 
     public registerBackend_args(
-      String app,
-      String listenSocket)
+            String app,
+            String listenSocket)
     {
       this();
       this.app = app;
@@ -503,32 +503,32 @@ public class NodeMonitorService {
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case APP:
-        if (value == null) {
-          unsetApp();
-        } else {
-          setApp((String)value);
-        }
-        break;
+        case APP:
+          if (value == null) {
+            unsetApp();
+          } else {
+            setApp((String)value);
+          }
+          break;
 
-      case LISTEN_SOCKET:
-        if (value == null) {
-          unsetListenSocket();
-        } else {
-          setListenSocket((String)value);
-        }
-        break;
+        case LISTEN_SOCKET:
+          if (value == null) {
+            unsetListenSocket();
+          } else {
+            setListenSocket((String)value);
+          }
+          break;
 
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case APP:
-        return getApp();
+        case APP:
+          return getApp();
 
-      case LISTEN_SOCKET:
-        return getListenSocket();
+        case LISTEN_SOCKET:
+          return getListenSocket();
 
       }
       throw new IllegalStateException();
@@ -541,10 +541,10 @@ public class NodeMonitorService {
       }
 
       switch (field) {
-      case APP:
-        return isSetApp();
-      case LISTEN_SOCKET:
-        return isSetListenSocket();
+        case APP:
+          return isSetApp();
+        case LISTEN_SOCKET:
+          return isSetListenSocket();
       }
       throw new IllegalStateException();
     }
@@ -656,7 +656,7 @@ public class NodeMonitorService {
     }
 
     public void validate() throws org.apache.thrift.TException {
-      // check for required fields
+// check for required fields
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -689,7 +689,7 @@ public class NodeMonitorService {
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
             break;
           }
           switch (schemeField.id) {
@@ -697,7 +697,7 @@ public class NodeMonitorService {
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
                 struct.app = iprot.readString();
                 struct.setAppIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -705,7 +705,7 @@ public class NodeMonitorService {
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
                 struct.listenSocket = iprot.readString();
                 struct.setListenSocketIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -716,7 +716,7 @@ public class NodeMonitorService {
         }
         iprot.readStructEnd();
 
-        // check for required fields of primitive type, which can't be checked in the validate method
+// check for required fields of primitive type, which can't be checked in the validate method
         struct.validate();
       }
 
@@ -861,8 +861,8 @@ public class NodeMonitorService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(registerBackend_result.class, metaDataMap);
     }
@@ -871,7 +871,7 @@ public class NodeMonitorService {
     }
 
     public registerBackend_result(
-      boolean success)
+            boolean success)
     {
       this();
       this.success = success;
@@ -921,21 +921,21 @@ public class NodeMonitorService {
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((Boolean)value);
-        }
-        break;
+        case SUCCESS:
+          if (value == null) {
+            unsetSuccess();
+          } else {
+            setSuccess((Boolean)value);
+          }
+          break;
 
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case SUCCESS:
-        return Boolean.valueOf(isSuccess());
+        case SUCCESS:
+          return Boolean.valueOf(isSuccess());
 
       }
       throw new IllegalStateException();
@@ -948,8 +948,8 @@ public class NodeMonitorService {
       }
 
       switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
+        case SUCCESS:
+          return isSetSuccess();
       }
       throw new IllegalStateException();
     }
@@ -1015,7 +1015,7 @@ public class NodeMonitorService {
 
     public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
       schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-      }
+    }
 
     @Override
     public String toString() {
@@ -1030,7 +1030,7 @@ public class NodeMonitorService {
     }
 
     public void validate() throws org.apache.thrift.TException {
-      // check for required fields
+// check for required fields
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -1043,7 +1043,7 @@ public class NodeMonitorService {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
-        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+// it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
         __isset_bit_vector = new BitSet(1);
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
@@ -1065,7 +1065,7 @@ public class NodeMonitorService {
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
             break;
           }
           switch (schemeField.id) {
@@ -1073,7 +1073,7 @@ public class NodeMonitorService {
               if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
                 struct.success = iprot.readBool();
                 struct.setSuccessIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -1084,7 +1084,7 @@ public class NodeMonitorService {
         }
         iprot.readStructEnd();
 
-        // check for required fields of primitive type, which can't be checked in the validate method
+// check for required fields of primitive type, which can't be checked in the validate method
         struct.validate();
       }
 
@@ -1210,9 +1210,9 @@ public class NodeMonitorService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.TASKS, new org.apache.thrift.meta_data.FieldMetaData("tasks", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, edu.berkeley.sparrow.thrift.TFullTaskId.class))));
+      tmpMap.put(_Fields.TASKS, new org.apache.thrift.meta_data.FieldMetaData("tasks", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST,
+                      new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, edu.berkeley.sparrow.thrift.TFullTaskId.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(tasksFinished_args.class, metaDataMap);
     }
@@ -1221,7 +1221,7 @@ public class NodeMonitorService {
     }
 
     public tasksFinished_args(
-      List<edu.berkeley.sparrow.thrift.TFullTaskId> tasks)
+            List<edu.berkeley.sparrow.thrift.TFullTaskId> tasks)
     {
       this();
       this.tasks = tasks;
@@ -1289,21 +1289,21 @@ public class NodeMonitorService {
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case TASKS:
-        if (value == null) {
-          unsetTasks();
-        } else {
-          setTasks((List<edu.berkeley.sparrow.thrift.TFullTaskId>)value);
-        }
-        break;
+        case TASKS:
+          if (value == null) {
+            unsetTasks();
+          } else {
+            setTasks((List<edu.berkeley.sparrow.thrift.TFullTaskId>)value);
+          }
+          break;
 
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case TASKS:
-        return getTasks();
+        case TASKS:
+          return getTasks();
 
       }
       throw new IllegalStateException();
@@ -1316,8 +1316,8 @@ public class NodeMonitorService {
       }
 
       switch (field) {
-      case TASKS:
-        return isSetTasks();
+        case TASKS:
+          return isSetTasks();
       }
       throw new IllegalStateException();
     }
@@ -1402,7 +1402,7 @@ public class NodeMonitorService {
     }
 
     public void validate() throws org.apache.thrift.TException {
-      // check for required fields
+// check for required fields
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -1435,7 +1435,7 @@ public class NodeMonitorService {
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
             break;
           }
           switch (schemeField.id) {
@@ -1454,7 +1454,7 @@ public class NodeMonitorService {
                   iprot.readListEnd();
                 }
                 struct.setTasksIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -1465,7 +1465,7 @@ public class NodeMonitorService {
         }
         iprot.readStructEnd();
 
-        // check for required fields of primitive type, which can't be checked in the validate method
+// check for required fields of primitive type, which can't be checked in the validate method
         struct.validate();
       }
 
@@ -1554,7 +1554,7 @@ public class NodeMonitorService {
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
+      ;
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -1694,7 +1694,7 @@ public class NodeMonitorService {
 
     public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
       schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-      }
+    }
 
     @Override
     public String toString() {
@@ -1706,7 +1706,7 @@ public class NodeMonitorService {
     }
 
     public void validate() throws org.apache.thrift.TException {
-      // check for required fields
+// check for required fields
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -1739,7 +1739,7 @@ public class NodeMonitorService {
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
             break;
           }
           switch (schemeField.id) {
@@ -1750,7 +1750,7 @@ public class NodeMonitorService {
         }
         iprot.readStructEnd();
 
-        // check for required fields of primitive type, which can't be checked in the validate method
+// check for required fields of primitive type, which can't be checked in the validate method
         struct.validate();
       }
 
@@ -1877,14 +1877,14 @@ public class NodeMonitorService {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.APP, new org.apache.thrift.meta_data.FieldMetaData("app", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.TASK_ID, new org.apache.thrift.meta_data.FieldMetaData("taskId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, edu.berkeley.sparrow.thrift.TFullTaskId.class)));
-      tmpMap.put(_Fields.STATUS, new org.apache.thrift.meta_data.FieldMetaData("status", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-      tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING          , true)));
+      tmpMap.put(_Fields.APP, new org.apache.thrift.meta_data.FieldMetaData("app", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TASK_ID, new org.apache.thrift.meta_data.FieldMetaData("taskId", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, edu.berkeley.sparrow.thrift.TFullTaskId.class)));
+      tmpMap.put(_Fields.STATUS, new org.apache.thrift.meta_data.FieldMetaData("status", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+      tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.DEFAULT,
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING          , true)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sendFrontendMessage_args.class, metaDataMap);
     }
@@ -1893,10 +1893,10 @@ public class NodeMonitorService {
     }
 
     public sendFrontendMessage_args(
-      String app,
-      edu.berkeley.sparrow.thrift.TFullTaskId taskId,
-      int status,
-      ByteBuffer message)
+            String app,
+            edu.berkeley.sparrow.thrift.TFullTaskId taskId,
+            int status,
+            ByteBuffer message)
     {
       this();
       this.app = app;
@@ -1921,7 +1921,7 @@ public class NodeMonitorService {
       this.status = other.status;
       if (other.isSetMessage()) {
         this.message = org.apache.thrift.TBaseHelper.copyBinary(other.message);
-;
+        ;
       }
     }
 
@@ -2044,54 +2044,54 @@ public class NodeMonitorService {
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case APP:
-        if (value == null) {
-          unsetApp();
-        } else {
-          setApp((String)value);
-        }
-        break;
+        case APP:
+          if (value == null) {
+            unsetApp();
+          } else {
+            setApp((String)value);
+          }
+          break;
 
-      case TASK_ID:
-        if (value == null) {
-          unsetTaskId();
-        } else {
-          setTaskId((edu.berkeley.sparrow.thrift.TFullTaskId)value);
-        }
-        break;
+        case TASK_ID:
+          if (value == null) {
+            unsetTaskId();
+          } else {
+            setTaskId((edu.berkeley.sparrow.thrift.TFullTaskId)value);
+          }
+          break;
 
-      case STATUS:
-        if (value == null) {
-          unsetStatus();
-        } else {
-          setStatus((Integer)value);
-        }
-        break;
+        case STATUS:
+          if (value == null) {
+            unsetStatus();
+          } else {
+            setStatus((Integer)value);
+          }
+          break;
 
-      case MESSAGE:
-        if (value == null) {
-          unsetMessage();
-        } else {
-          setMessage((ByteBuffer)value);
-        }
-        break;
+        case MESSAGE:
+          if (value == null) {
+            unsetMessage();
+          } else {
+            setMessage((ByteBuffer)value);
+          }
+          break;
 
       }
     }
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case APP:
-        return getApp();
+        case APP:
+          return getApp();
 
-      case TASK_ID:
-        return getTaskId();
+        case TASK_ID:
+          return getTaskId();
 
-      case STATUS:
-        return Integer.valueOf(getStatus());
+        case STATUS:
+          return Integer.valueOf(getStatus());
 
-      case MESSAGE:
-        return getMessage();
+        case MESSAGE:
+          return getMessage();
 
       }
       throw new IllegalStateException();
@@ -2104,14 +2104,14 @@ public class NodeMonitorService {
       }
 
       switch (field) {
-      case APP:
-        return isSetApp();
-      case TASK_ID:
-        return isSetTaskId();
-      case STATUS:
-        return isSetStatus();
-      case MESSAGE:
-        return isSetMessage();
+        case APP:
+          return isSetApp();
+        case TASK_ID:
+          return isSetTaskId();
+        case STATUS:
+          return isSetStatus();
+        case MESSAGE:
+          return isSetMessage();
       }
       throw new IllegalStateException();
     }
@@ -2273,7 +2273,7 @@ public class NodeMonitorService {
     }
 
     public void validate() throws org.apache.thrift.TException {
-      // check for required fields
+// check for required fields
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -2286,7 +2286,7 @@ public class NodeMonitorService {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
-        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+// it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
         __isset_bit_vector = new BitSet(1);
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
@@ -2308,7 +2308,7 @@ public class NodeMonitorService {
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
             break;
           }
           switch (schemeField.id) {
@@ -2316,7 +2316,7 @@ public class NodeMonitorService {
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
                 struct.app = iprot.readString();
                 struct.setAppIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -2325,7 +2325,7 @@ public class NodeMonitorService {
                 struct.taskId = new edu.berkeley.sparrow.thrift.TFullTaskId();
                 struct.taskId.read(iprot);
                 struct.setTaskIdIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -2333,7 +2333,7 @@ public class NodeMonitorService {
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
                 struct.status = iprot.readI32();
                 struct.setStatusIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -2341,7 +2341,7 @@ public class NodeMonitorService {
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
                 struct.message = iprot.readBinary();
                 struct.setMessageIsSet(true);
-              } else { 
+              } else {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
@@ -2352,7 +2352,7 @@ public class NodeMonitorService {
         }
         iprot.readStructEnd();
 
-        // check for required fields of primitive type, which can't be checked in the validate method
+// check for required fields of primitive type, which can't be checked in the validate method
         struct.validate();
       }
 
@@ -2462,7 +2462,7 @@ public class NodeMonitorService {
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
+      ;
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -2602,7 +2602,7 @@ public class NodeMonitorService {
 
     public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
       schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-      }
+    }
 
     @Override
     public String toString() {
@@ -2614,7 +2614,7 @@ public class NodeMonitorService {
     }
 
     public void validate() throws org.apache.thrift.TException {
-      // check for required fields
+// check for required fields
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -2647,7 +2647,7 @@ public class NodeMonitorService {
         while (true)
         {
           schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
             break;
           }
           switch (schemeField.id) {
@@ -2658,7 +2658,7 @@ public class NodeMonitorService {
         }
         iprot.readStructEnd();
 
-        // check for required fields of primitive type, which can't be checked in the validate method
+// check for required fields of primitive type, which can't be checked in the validate method
         struct.validate();
       }
 

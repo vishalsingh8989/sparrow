@@ -229,6 +229,7 @@ public class ProtoFrontend implements FrontendService.Iface {
         }
       }
 
+
       List<UserInfo> users = new ArrayList<UserInfo>();
       if (conf.containsKey(USERS)) {
         for (String userSpecification : conf.getStringArray(USERS)) {

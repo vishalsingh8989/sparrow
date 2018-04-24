@@ -70,6 +70,7 @@ public class SparrowDaemon {
 
     SchedulerThrift scheduler = new SchedulerThrift();
     scheduler.initialize(conf);
+    
   }
 
   public static void main(String[] args) throws Exception {

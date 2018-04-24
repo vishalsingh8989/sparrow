@@ -128,6 +128,11 @@ public class NodeMonitor {
   public void tasksFinished(List<TFullTaskId> tasks) {
     LOG.debug(Logging.functionCall(tasks));
     scheduler.tasksFinished(tasks);
+    LOG.info("tasksFinished :  number of tasks : " + tasks.size());
+//    ByteBuffer message  = ByteBuffer.allocate(10*10);
+//    message.putChar('i');
+//    sendFrontendMessage("testApp", tasks.get(0),
+//    1,  message);
   }
 
   public boolean enqueueTaskReservations(TEnqueueTaskReservationsRequest request) {

@@ -115,8 +115,9 @@ public class ProtoBackend implements BackendService.Iface {
 	  public void run() {
 		  while (true) {
 		  	try {
-		  		TFullTaskId task = finishedTasks.take();
+		  		    TFullTaskId task = finishedTasks.take();
 					client.tasksFinished(Lists.newArrayList(task));
+                    LOG.info("TasksFinishedRpcRunnable :  ");
 				} catch (InterruptedException e) {
 					LOG.error("Error taking a task from the queue: " + e.getMessage());
 				} catch (TException e) {
@@ -163,6 +164,7 @@ public class ProtoBackend implements BackendService.Iface {
 
       finishedTasks.add(taskId);
       LOG.debug("Task running for " + (System.currentTimeMillis() - taskStart) + " ms");
+
     }
   }
 

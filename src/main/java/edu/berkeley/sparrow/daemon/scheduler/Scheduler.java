@@ -374,6 +374,9 @@ public class Scheduler {
               (end - start) + " milliseconds");
   }
 
+  public void taskComplete( String requestId, THostPort nodeMonitorAddress, long timeTaken){
+    LOG.debug(Logging.functionCall(requestId, nodeMonitorAddress, timeTaken));
+  }
   public List<TTaskLaunchSpec> getTask(
       String requestId, THostPort nodeMonitorAddress) {
     /* TODO: Consider making this synchronized to avoid the need for synchronization in
