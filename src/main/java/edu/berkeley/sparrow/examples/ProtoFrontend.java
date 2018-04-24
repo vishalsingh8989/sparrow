@@ -314,7 +314,7 @@ public class ProtoFrontend implements FrontendService.Iface {
 
     int idx = 0;
     double probe_ratio=2;
-    while(idx <  40){
+    while(idx <  2){
     //while (System.currentTimeMillis() < end) {
       // Lambda is the arrival rate in S, so we need to multiply the result here by
       // 1000 to convert to ms.

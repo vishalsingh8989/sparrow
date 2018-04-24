@@ -342,9 +342,9 @@ public class Scheduler {
       }
     } else {
       if (request.isSetProbeRatio()) {
-        taskPlacer = new UnconstrainedTaskPlacer(requestId, request.getProbeRatio());
+        taskPlacer = new UnconstrainedTaskPlacer(requestId, request.getProbeRatio(), conf);
       } else {
-        taskPlacer = new UnconstrainedTaskPlacer(requestId, defaultProbeRatioUnconstrained);
+        taskPlacer = new UnconstrainedTaskPlacer(requestId, defaultProbeRatioUnconstrained, conf);
       }
     }
     requestTaskPlacers.put(requestId, taskPlacer);
