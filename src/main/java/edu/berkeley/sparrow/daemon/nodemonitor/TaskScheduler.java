@@ -110,6 +110,7 @@ public abstract class TaskScheduler {
   }
 
   void tasksFinished(List<TFullTaskId> finishedTasks) {
+    LOG.info("tasksFinished :  number of  tasks : " + finishedTasks.size());
     for (TFullTaskId t : finishedTasks) {
       AUDIT_LOG.info(Logging.auditEventString("task_completed", t.getRequestId(), t.getTaskId()));
       handleTaskFinished(t.getRequestId(), t.getTaskId());

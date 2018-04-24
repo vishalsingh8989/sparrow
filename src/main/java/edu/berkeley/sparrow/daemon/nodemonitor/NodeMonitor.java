@@ -25,6 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
+import com.google.common.collect.Lists;
+import edu.berkeley.sparrow.daemon.scheduler.SchedulerThrift;
+import edu.berkeley.sparrow.daemon.util.*;
+import edu.berkeley.sparrow.thrift.*;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
@@ -33,15 +37,8 @@ import org.apache.thrift.async.AsyncMethodCallback;
 import com.google.common.collect.Maps;
 
 import edu.berkeley.sparrow.daemon.SparrowConf;
-import edu.berkeley.sparrow.daemon.util.Logging;
-import edu.berkeley.sparrow.daemon.util.Network;
-import edu.berkeley.sparrow.daemon.util.Resources;
-import edu.berkeley.sparrow.daemon.util.ThriftClientPool;
-import edu.berkeley.sparrow.thrift.SchedulerService;
 import edu.berkeley.sparrow.thrift.SchedulerService.AsyncClient;
 import edu.berkeley.sparrow.thrift.SchedulerService.AsyncClient.sendFrontendMessage_call;
-import edu.berkeley.sparrow.thrift.TEnqueueTaskReservationsRequest;
-import edu.berkeley.sparrow.thrift.TFullTaskId;
 
 /**
  * A Node Monitor which is responsible for communicating with application
@@ -68,7 +65,11 @@ public class NodeMonitor {
   private TaskLauncherService taskLauncherService;
   private String ipAddress;
 
-  public void initialize(Configuration conf, int nodeMonitorInternalPort)
+    private HashMap<String, GetTaskService.Client> schedulerClients = Maps.newHashMap();
+    private THostPort nodeMonitorInternalAddress;
+
+
+    public void initialize(Configuration conf, int nodeMonitorInternalPort)
       throws UnknownHostException {
     String mode = conf.getString(SparrowConf.DEPLYOMENT_MODE, "unspecified");
     if (mode.equals("standalone")) {
@@ -104,6 +105,8 @@ public class NodeMonitor {
     scheduler.initialize(conf, nodeMonitorInternalPort);
     taskLauncherService = new TaskLauncherService();
     taskLauncherService.initialize(conf, scheduler, nodeMonitorInternalPort);
+
+    nodeMonitorInternalAddress = new THostPort(Network.getIPAddress(conf), nodeMonitorInternalPort);
   }
 
   /**
@@ -129,10 +132,36 @@ public class NodeMonitor {
     LOG.debug(Logging.functionCall(tasks));
     scheduler.tasksFinished(tasks);
     LOG.info("tasksFinished :  number of tasks : " + tasks.size());
-//    ByteBuffer message  = ByteBuffer.allocate(10*10);
-//    message.putChar('i');
-//    sendFrontendMessage("testApp", tasks.get(0),
-//    1,  message);
+
+      for(TFullTaskId  task :  tasks){
+          String schedulerAddress = task.schedulerAddress.getHost();
+
+
+          if (!schedulerClients.containsKey(schedulerAddress)) {
+              try {
+                  schedulerClients.put(schedulerAddress,
+                          TClients.createBlockingGetTaskClient(
+                                  task.schedulerAddress.getHost(),
+                                  SchedulerThrift.DEFAULT_GET_TASK_PORT));
+              } catch (IOException e) {
+                  LOG.error("Error creating thrift client: " + e.getMessage());
+
+
+              }
+          }
+
+          GetTaskService.Client getTaskClient = schedulerClients.get(schedulerAddress);
+
+
+          try {
+              getTaskClient.send_taskCompelete(task.requestId,nodeMonitorInternalAddress, -111578708 );
+          } catch (TException e) {
+              e.printStackTrace();
+          }
+
+      }
+
+
   }
 
   public boolean enqueueTaskReservations(TEnqueueTaskReservationsRequest request) {
