@@ -68,7 +68,7 @@ public class SparrowDaemon {
       }
     }
 
-    SchedulerThrift scheduler = new SchedulerThrift();
+    SchedulerThrift scheduler = SchedulerThrift.getInstance();
     scheduler.initialize(conf);
     
   }

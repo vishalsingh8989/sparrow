@@ -1,38 +1,19 @@
-/*
- * Copyright 2013 The Regents of The University California
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package edu.berkeley.sparrow.daemon.nodemonitor;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import com.google.common.collect.Maps;
-import edu.berkeley.sparrow.daemon.scheduler.SchedulerThrift;
-import edu.berkeley.sparrow.daemon.util.TClients;
-import edu.berkeley.sparrow.thrift.*;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import edu.berkeley.sparrow.daemon.util.Logging;
 import edu.berkeley.sparrow.daemon.util.Network;
-import org.apache.thrift.TException;
+import edu.berkeley.sparrow.thrift.TEnqueueTaskReservationsRequest;
+import edu.berkeley.sparrow.thrift.TFullTaskId;
+import edu.berkeley.sparrow.thrift.TTaskLaunchSpec;
+import edu.berkeley.sparrow.thrift.TUserGroupInfo;
 
 /**
  * A TaskScheduler is a buffer that holds task reservations until an application backend is
@@ -85,15 +66,12 @@ public abstract class TaskScheduler {
   protected Configuration conf;
   private final BlockingQueue<TaskSpec> runnableTaskQueue =
       new LinkedBlockingQueue<TaskSpec>();
-  public HashMap<String, GetTaskService.Client> schedulerClients = Maps.newHashMap();
-  private THostPort nodeMonitorInternalAddress;
 
   /** Initialize the task scheduler, passing it the current available resources
    *  on the machine. */
   void initialize(Configuration conf, int nodeMonitorPort) {
     this.conf = conf;
     this.ipAddress = Network.getIPAddress(conf);
-    this.nodeMonitorInternalAddress = new THostPort(Network.getIPAddress(conf), nodeMonitorPort);
   }
 
   /**
@@ -117,49 +95,10 @@ public abstract class TaskScheduler {
   }
 
   void tasksFinished(List<TFullTaskId> finishedTasks) {
-    LOG.info("tasksFinished :  number of  tasks : " + finishedTasks.size());
-    LOG.debug("tasksFinished :  number of  tasks : " + finishedTasks.size());
-//    for (TFullTaskId t : finishedTasks) {
-//      AUDIT_LOG.info(Logging.auditEventString("task_completed", t.getRequestId(), t.getTaskId()));
-//      handleTaskFinished(t.getRequestId(), t.getTaskId());
-//    }
-
-    for (TFullTaskId task : finishedTasks) {
-//      String schedulerAddress ;
-//     // try {
-//        schedulerAddress = task.getSchedulerAddress().getHost();
-////      }catch (Exception e){
-////          LOG.info("error fetching schedular host address.");
-////          LOG.debug("error fetching schedular host address.");
-////          continue;
-////      }
-//      if (!schedulerClients.containsKey(schedulerAddress)) {
-//        try {
-//          schedulerClients.put(schedulerAddress,
-//                  TClients.createBlockingGetTaskClient(
-//                          task.schedulerAddress.getHost(),
-//                          SchedulerThrift.DEFAULT_GET_TASK_PORT));
-//        } catch (IOException e) {
-//          LOG.error("Error creating thrift client: " + e.getMessage());
-//        }
-//      }
-//
-//      GetTaskService.Client getTaskClient = schedulerClients.get(schedulerAddress);
-//      try {
-//        getTaskClient.send_taskCompelete(task.requestId,nodeMonitorInternalAddress, -111578708 );
-//      } catch (TException e) {
-//        LOG.info("error in taskCompelete : ");
-//        e.printStackTrace();
-//
-//      }
-
-
-      handleTaskFinished(task.getRequestId(), task.getTaskId());
-
+    for (TFullTaskId t : finishedTasks) {
+      AUDIT_LOG.info(Logging.auditEventString("task_completed", t.getRequestId(), t.getTaskId()));
+      handleTaskFinished(t.getRequestId(), t.getTaskId());
     }
-
-
-
   }
 
   void noTaskForReservation(TaskSpec taskReservation) {

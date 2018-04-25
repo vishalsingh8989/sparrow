@@ -22,6 +22,7 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
 import edu.berkeley.sparrow.daemon.SparrowConf;
@@ -45,7 +46,16 @@ public class SchedulerThrift implements SchedulerService.Iface, GetTaskService.I
   public final static int DEFAULT_GET_TASK_PORT = 20507;
 
   private Scheduler scheduler = new Scheduler();
+  public static  SchedulerThrift mSchedulerThrift = null;
 
+  private final static Logger LOG = Logger.getLogger(SchedulerThrift.class);
+  public static SchedulerThrift getInstance(){
+    if (mSchedulerThrift == null){
+      mSchedulerThrift = new SchedulerThrift();
+    }
+
+    return mSchedulerThrift;
+  }
   /**
    * Initialize this thrift service.
    *
@@ -62,7 +72,9 @@ public class SchedulerThrift implements SchedulerService.Iface, GetTaskService.I
     String hostname = Network.getHostName(conf);
     InetSocketAddress addr = new InetSocketAddress(hostname, port);
     scheduler.initialize(conf, addr);
+    LOG.info("hostname : " + hostname + " , addr : " + addr );
     TServers.launchThreadedThriftServer(port, threads, processor);
+
     int getTaskPort = conf.getInt(SparrowConf.GET_TASK_PORT,
         DEFAULT_GET_TASK_PORT);
     GetTaskService.Processor<GetTaskService.Iface> getTaskprocessor =
