@@ -55,6 +55,8 @@ import edu.berkeley.sparrow.thrift.TSchedulingRequest;
 import edu.berkeley.sparrow.thrift.TTaskLaunchSpec;
 import edu.berkeley.sparrow.thrift.TTaskSpec;
 
+import static edu.berkeley.sparrow.daemon.scheduler.DynamicScheduler.mDynamicScheduler;
+
 /**
  * This class implements the Sparrow scheduler functionality.
  */
@@ -97,6 +99,8 @@ public class Scheduler {
   /** Probe ratios to use if the probe ratio is not explicitly set in the request. */
   private double defaultProbeRatioUnconstrained;
   private double defaultProbeRatioConstrained;
+
+  private DynamicScheduler getT = DynamicScheduler.getInstance();
 
   /**
    * For each request, the task placer that should be used to place the request's tasks. Indexed
@@ -377,11 +381,15 @@ public class Scheduler {
   public void taskComplete( String requestId, THostPort nodeMonitorAddress, long timeTaken){
     LOG.debug(Logging.functionCall(requestId, nodeMonitorAddress, timeTaken));
   }
+
+
   public List<TTaskLaunchSpec> getTask(
       String requestId, THostPort nodeMonitorAddress) {
     /* TODO: Consider making this synchronized to avoid the need for synchronization in
      * the task placers (although then we'd lose the ability to parallelize over task placers). */
     LOG.debug(Logging.functionCall(requestId, nodeMonitorAddress));
+
+
 
     TaskPlacer taskPlacer = requestTaskPlacers.get(requestId);
     if (taskPlacer == null) {
@@ -392,11 +400,14 @@ public class Scheduler {
 
     synchronized(taskPlacer) {
       List<TTaskLaunchSpec> taskLaunchSpecs = taskPlacer.assignTask(nodeMonitorAddress);
+
+
       if (taskLaunchSpecs == null || taskLaunchSpecs.size() > 1) {
         LOG.error("Received invalid task placement for request " + requestId + ": " +
                   taskLaunchSpecs.toString());
         return Lists.newArrayList();
       } else if (taskLaunchSpecs.size() == 1) {
+          mDynamicScheduler.addTaskStatus(requestId, nodeMonitorAddress);
         AUDIT_LOG.info(Logging.auditEventString("scheduler_assigned_task", requestId,
             taskLaunchSpecs.get(0).taskId,
             nodeMonitorAddress.getHost()));
