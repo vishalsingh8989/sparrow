@@ -67,6 +67,7 @@ public class NodeMonitor {
 
     private HashMap<String, GetTaskService.Client> schedulerClients = Maps.newHashMap();
     private THostPort nodeMonitorInternalAddress;
+    private SchedulerThrift mSchedulerThrift;
 
 
     public void initialize(Configuration conf, int nodeMonitorInternalPort)
@@ -107,7 +108,15 @@ public class NodeMonitor {
     taskLauncherService.initialize(conf, scheduler, nodeMonitorInternalPort);
 
     nodeMonitorInternalAddress = new THostPort(Network.getIPAddress(conf), nodeMonitorInternalPort);
-  }
+
+        mSchedulerThrift = new SchedulerThrift();
+        try {
+            mSchedulerThrift.initialize(conf);
+        } catch (IOException e) {
+
+
+        }
+    }
 
   /**
    * Registers the backend with assumed 0 load, and returns true if successful.
@@ -134,33 +143,35 @@ public class NodeMonitor {
     LOG.info("tasksFinished :  number of tasks : " + tasks.size());
     LOG.debug("tasksFinished :  number of tasks : " + tasks.size());
 
+
       for(TFullTaskId  task :  tasks){
-          String schedulerAddress = task.schedulerAddress.getHost();
-
-
-          if (!schedulerClients.containsKey(schedulerAddress)) {
-              try {
-                  schedulerClients.put(schedulerAddress,
-                          TClients.createBlockingGetTaskClient(
-                                  task.schedulerAddress.getHost(),
-                                  SchedulerThrift.DEFAULT_GET_TASK_PORT));
-              } catch (IOException e) {
-                  LOG.error("Error creating thrift client: " + e.getMessage());
-
-
-              }
-          }
-
-          GetTaskService.Client getTaskClient = schedulerClients.get(schedulerAddress);
-
 
           try {
-              getTaskClient.send_taskCompelete(task.requestId,nodeMonitorInternalAddress, -111578708 );
+              mSchedulerThrift.sendFrontendMessage(task.appId, task , 111578708,null );
           } catch (TException e) {
-              LOG.info("error in taskCompelete : ");
               e.printStackTrace();
-
           }
+
+//
+//          String schedulerAddress = task.schedulerAddress.getHost();
+//          if (!schedulerClients.containsKey(schedulerAddress)) {
+//              try {
+//                  schedulerClients.put(schedulerAddress,
+//                          TClients.createBlockingGetTaskClient(
+//                                  task.schedulerAddress.getHost(),
+//                                  SchedulerThrift.DEFAULT_SCHEDULER_THRIFT_PORT));
+//              } catch (IOException e) {
+//                  LOG.error("Error creating thrift client: " + e.getMessage());
+//              }
+//          }
+//          GetTaskService.Client getTaskClient = schedulerClients.get(schedulerAddress);
+//          try {
+//              getTaskClient.send_taskCompelete(task.requestId, nodeMonitorInternalAddress, -111578708 );
+//          } catch (TException e) {
+//              LOG.info("error in taskCompelete : ");
+//              e.printStackTrace();
+//
+//          }
 
       }
 
