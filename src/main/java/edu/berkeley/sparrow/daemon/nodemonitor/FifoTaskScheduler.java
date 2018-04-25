@@ -19,6 +19,8 @@ package edu.berkeley.sparrow.daemon.nodemonitor;
 import java.util.Iterator;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import edu.berkeley.sparrow.daemon.scheduler.SchedulerThrift;
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 /**
@@ -28,6 +30,7 @@ import org.apache.log4j.Logger;
  */
 public class FifoTaskScheduler extends TaskScheduler {
   private final static Logger LOG = Logger.getLogger(FifoTaskScheduler.class);
+  private final SchedulerThrift mSchedulerThrift;
 
   public int maxActiveTasks;
   public Integer activeTasks;
@@ -37,6 +40,9 @@ public class FifoTaskScheduler extends TaskScheduler {
   public FifoTaskScheduler(int max) {
     maxActiveTasks = max;
     activeTasks = 0;
+
+    mSchedulerThrift = SchedulerThrift.getInstance();
+
   }
 
   @Override
@@ -85,11 +91,13 @@ public class FifoTaskScheduler extends TaskScheduler {
 
   @Override
   protected void handleTaskFinished(String requestId, String taskId) {
+
     attemptTaskLaunch(requestId, taskId);
   }
 
   @Override
   protected void handleNoTaskForReservation(TaskSpec taskSpec) {
+
     attemptTaskLaunch(taskSpec.previousRequestId, taskSpec.previousTaskId);
   }
 

@@ -37,6 +37,7 @@ import edu.berkeley.sparrow.daemon.util.Logging;
 public class SparrowDaemon {
   // Eventually, we'll want to change this to something higher than debug.
   public final static Level DEFAULT_LOG_LEVEL = Level.DEBUG;
+  private SchedulerThrift scheduler;
 
   public void initialize(Configuration conf) throws Exception {
     Level logLevel = Level.toLevel(conf.getString(SparrowConf.LOG_LEVEL, ""),
@@ -68,8 +69,12 @@ public class SparrowDaemon {
       }
     }
 
-    SchedulerThrift scheduler = SchedulerThrift.getInstance();
+    scheduler = SchedulerThrift.getInstance();
     scheduler.initialize(conf);
+    scheduler.registerFrontend(conf.getString(SparrowConf.STATIC_APP_NAME), conf.getString(SparrowConf.SCHEDULER_HOST));
+
+
+
     
   }
 
@@ -92,6 +97,7 @@ public class SparrowDaemon {
 
     String configFile = (String) options.valueOf("c");
     Configuration conf = new PropertiesConfiguration(configFile);
+
     SparrowDaemon sparrowDaemon = new SparrowDaemon();
     sparrowDaemon.initialize(conf);
   }

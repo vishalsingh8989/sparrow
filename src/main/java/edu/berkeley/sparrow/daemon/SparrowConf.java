@@ -64,6 +64,8 @@ public class SparrowConf {
   public final static String DEPLYOMENT_MODE = "deployment.mode";
   public final static String DEFAULT_DEPLOYMENT_MODE = "production";
 
+
+  public static final String SCHEDULER_HOST = "scheduler_host";
   /** The ratio of probes used in a scheduling decision to tasks. */
   // For requests w/o constraints...
   public final static String SAMPLE_RATIO = "c";

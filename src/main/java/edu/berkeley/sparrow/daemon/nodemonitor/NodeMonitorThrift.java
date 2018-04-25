@@ -22,7 +22,9 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.List;
 
+import edu.berkeley.sparrow.daemon.util.Logging;
 import org.apache.commons.configuration.Configuration;
+import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
 import com.google.common.base.Optional;
@@ -47,6 +49,7 @@ public class NodeMonitorThrift implements NodeMonitorService.Iface,
   public final static int DEFAULT_NM_THRIFT_THREADS = 32;
   public final static int DEFAULT_INTERNAL_THRIFT_PORT = 20502;
   public final static int DEFAULT_INTERNAL_THRIFT_THREADS = 8;
+  private final static Logger LOG = Logger.getLogger(NodeMonitorThrift.class);
 
   private NodeMonitor nodeMonitor = new NodeMonitor();
   // The socket addr (ip:port) where we listen for requests from other Sparrow daemons.
@@ -103,6 +106,7 @@ public class NodeMonitorThrift implements NodeMonitorService.Iface,
 
   @Override
   public void tasksFinished(List<TFullTaskId> tasks) throws TException {
+    LOG.info(Logging.functionCall(tasks));
     nodeMonitor.tasksFinished(tasks);
   }
 

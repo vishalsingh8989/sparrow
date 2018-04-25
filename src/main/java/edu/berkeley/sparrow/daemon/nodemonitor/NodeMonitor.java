@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 import com.google.common.collect.Lists;
+import edu.berkeley.sparrow.daemon.SparrowDaemon;
 import edu.berkeley.sparrow.daemon.scheduler.SchedulerThrift;
 import edu.berkeley.sparrow.daemon.util.*;
 import edu.berkeley.sparrow.thrift.*;
@@ -150,6 +151,7 @@ public class NodeMonitor {
               message.putChar(5, 'd');
               message.putChar(6, 'a');
               mSchedulerThrift.sendFrontendMessage(task.appId, task, 111578708, message);
+
           } catch (TException e) {
               LOG.info("sendFrontendMessage failed.");
               e.printStackTrace();

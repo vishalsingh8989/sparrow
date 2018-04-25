@@ -382,6 +382,7 @@ public class Scheduler {
     /* TODO: Consider making this synchronized to avoid the need for synchronization in
      * the task placers (although then we'd lose the ability to parallelize over task placers). */
     LOG.debug(Logging.functionCall(requestId, nodeMonitorAddress));
+
     TaskPlacer taskPlacer = requestTaskPlacers.get(requestId);
     if (taskPlacer == null) {
       LOG.debug("Received getTask() request for request " + requestId + ", which had no more " +

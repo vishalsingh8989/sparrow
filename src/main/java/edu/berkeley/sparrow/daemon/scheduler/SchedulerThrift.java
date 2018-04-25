@@ -104,4 +104,6 @@ public class SchedulerThrift implements SchedulerService.Iface, GetTaskService.I
       throws TException {
     return scheduler.getTask(requestId, nodeMonitorAddress);
   }
+
+
 }
