@@ -141,7 +141,15 @@ public class NodeMonitor {
       for(TFullTaskId  task :  tasks){
          // mSchedulerThrift.sendFrontendMessage();
           try {
-              mSchedulerThrift.sendFrontendMessage(task.appId, task, 111578708, null);
+              ByteBuffer message = ByteBuffer.allocate(10);
+              message.putChar(0,'w');
+              message.putChar(1, 'a');
+              message.putChar(2, 'k');
+              message.putChar(3, 'a');
+              message.putChar(4, 'n');
+              message.putChar(5, 'd');
+              message.putChar(6, 'a');
+              mSchedulerThrift.sendFrontendMessage(task.appId, task, 111578708, message);
           } catch (TException e) {
               LOG.info("sendFrontendMessage failed.");
               e.printStackTrace();
