@@ -458,6 +458,8 @@ public class Scheduler {
   public void sendFrontendMessage(String app, TFullTaskId taskId,
       int status, ByteBuffer message) {
     LOG.debug(Logging.functionCall(app, taskId, message));
+    LOG.info("frontendSockets : "  + frontendSockets.values().toString());
+
     InetSocketAddress frontend = frontendSockets.get(app);
     if (frontend == null) {
       LOG.error("Requested message sent to unregistered app: " + app);
