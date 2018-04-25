@@ -132,6 +132,7 @@ public class NodeMonitor {
     LOG.debug(Logging.functionCall(tasks));
     scheduler.tasksFinished(tasks);
     LOG.info("tasksFinished :  number of tasks : " + tasks.size());
+    LOG.debug("tasksFinished :  number of tasks : " + tasks.size());
 
       for(TFullTaskId  task :  tasks){
           String schedulerAddress = task.schedulerAddress.getHost();
@@ -156,7 +157,9 @@ public class NodeMonitor {
           try {
               getTaskClient.send_taskCompelete(task.requestId,nodeMonitorInternalAddress, -111578708 );
           } catch (TException e) {
+              LOG.info("error in taskCompelete : ");
               e.printStackTrace();
+
           }
 
       }
