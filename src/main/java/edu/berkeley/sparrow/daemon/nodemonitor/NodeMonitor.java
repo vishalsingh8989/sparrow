@@ -140,6 +140,12 @@ public class NodeMonitor {
 
       for(TFullTaskId  task :  tasks){
          // mSchedulerThrift.sendFrontendMessage();
+          try {
+              mSchedulerThrift.sendFrontendMessage(task.appId, task, 111578708, null);
+          } catch (TException e) {
+              LOG.info("sendFrontendMessage failed.");
+              e.printStackTrace();
+          }
       }
 
 
