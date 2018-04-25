@@ -117,6 +117,16 @@ public class ProtoBackend implements BackendService.Iface {
 		  	try {
 		  		    TFullTaskId task = finishedTasks.take();
 					client.tasksFinished(Lists.newArrayList(task));
+                    ByteBuffer message = ByteBuffer.allocate(10);
+                    message.putChar(0,'w');
+                    message.putChar(1, 'a');
+                    message.putChar(2, 'k');
+                    message.putChar(3, 'a');
+                    message.putChar(4, 'n');
+                    message.putChar(5, 'd');
+                    message.putChar(6, 'a');
+
+					client.sendFrontendMessage(task.appId, task ,111578708, message);
                     LOG.info("TasksFinishedRpcRunnable :  ");
 				} catch (InterruptedException e) {
 					LOG.error("Error taking a task from the queue: " + e.getMessage());
