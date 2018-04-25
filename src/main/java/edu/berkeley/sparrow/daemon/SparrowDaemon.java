@@ -71,7 +71,8 @@ public class SparrowDaemon {
 
     scheduler = SchedulerThrift.getInstance();
     scheduler.initialize(conf);
-    scheduler.registerFrontend(conf.getString(SparrowConf.STATIC_APP_NAME), conf.getString(SparrowConf.SCHEDULER_HOST));
+
+    //scheduler.registerFrontend(conf.getString(SparrowConf.STATIC_APP_NAME), conf.getString(SparrowConf.SCHEDULER_HOST));
 
 
 
