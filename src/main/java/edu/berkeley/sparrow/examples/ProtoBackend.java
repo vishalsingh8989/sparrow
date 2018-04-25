@@ -115,6 +115,7 @@ public class ProtoBackend implements BackendService.Iface {
 	  public void run() {
 		  while (true) {
 		  	try {
+
 		  		    TFullTaskId task = finishedTasks.take();
 					client.tasksFinished(Lists.newArrayList(task));
                     ByteBuffer message = ByteBuffer.allocate(10);
