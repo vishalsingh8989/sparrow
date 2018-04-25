@@ -18,6 +18,7 @@ package edu.berkeley.sparrow.examples;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -339,7 +340,9 @@ public class ProtoFrontend implements FrontendService.Iface {
   public void frontendMessage(TFullTaskId taskId, int status, ByteBuffer message)
       throws TException {
     // We don't use messages here, so just log it.
-    LOG.debug("Got unexpected message: " + Serialization.getByteBufferContents(message));
+
+    //LOG.debug("Got unexpected message: " + Serialization.getByteBufferContents(message));
+    LOG.debug("Got expected message: " +taskId.taskId +   " : "  + taskId.requestId +  ", " +  message.toString() + " status : " + status);
   }
 
   public static void main(String[] args) {
