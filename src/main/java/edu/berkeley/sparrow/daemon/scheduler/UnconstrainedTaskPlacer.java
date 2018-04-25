@@ -52,6 +52,7 @@ public class UnconstrainedTaskPlacer implements TaskPlacer {
    * enqueued there.
    */
   private Map<THostPort, Integer> outstandingReservations;
+  public DynamicScheduler dynamicScheduler = DynamicScheduler.getInstance();
 
   /** Whether the remaining reservations have been cancelled. */
   boolean cancelled;
@@ -144,6 +145,8 @@ public class UnconstrainedTaskPlacer implements TaskPlacer {
     } else {
       TTaskLaunchSpec launchSpec = unlaunchedTasks.get(0);
       unlaunchedTasks.remove(0);
+
+      dynamicScheduler.addTaskStatus(requestId  , nodeMonitorAddress);
       LOG.debug("Request " + requestId + ", node monitor " + nodeMonitorAddress.toString() +
                 ": Assigning task");
       return Lists.newArrayList(launchSpec);

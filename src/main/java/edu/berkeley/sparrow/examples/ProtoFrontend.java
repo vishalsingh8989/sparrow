@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import edu.berkeley.sparrow.daemon.scheduler.DynamicScheduler;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
@@ -95,6 +96,9 @@ public class ProtoFrontend implements FrontendService.Iface {
   private static final Logger LOG = Logger.getLogger(ProtoFrontend.class);
   public final static long startTime = System.currentTimeMillis();
   public static AtomicInteger tasksLaunched = new AtomicInteger(0);
+
+
+  private DynamicScheduler  mDynamicScheduler = DynamicScheduler.getInstance();
 
   /** A runnable which Spawns a new thread to launch a scheduling request. */
   private class JobLaunchRunnable implements Runnable {
@@ -343,6 +347,8 @@ public class ProtoFrontend implements FrontendService.Iface {
 
     //LOG.debug("Got unexpected message: " + Serialization.getByteBufferContents(message));
     LOG.debug("Got expected message: " +taskId.taskId +   " : "  + taskId.requestId +  ", " +  message.toString() + " status : " + status);
+
+    LOG.debug("Mesage received from  : " + mDynamicScheduler.getTaskStatus(taskId.requestId));
   }
 
   public static void main(String[] args) {
