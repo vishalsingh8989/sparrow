@@ -7,6 +7,7 @@ import javafx.util.Pair;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class DynamicScheduler {
 
@@ -25,7 +26,11 @@ public class DynamicScheduler {
     /**
      * map worker machine vs (total time taken , total jobs)
      */
-    private HashMap<THostPort,Pair<Long, Long>> timeTaken = new HashMap<THostPort,Pair<Long, Long>>();
+    private HashMap<THostPort,Long> totalTimeTaken = new HashMap<THostPort,Long>();
+
+    private HashMap<THostPort,Long> totalTask = new HashMap<THostPort,Long>();
+
+
 
 
     /**
@@ -68,16 +73,15 @@ public class DynamicScheduler {
 
     public  void addTimeTaken(THostPort host,  long lastExecutionTime){
         LOG.info(Logging.functionCall(host,lastExecutionTime));
-        if(timeTaken.containsKey(host)){
-            Pair<Long, Long> mPair = timeTaken.get(host);
-            Long key = mPair.getKey();
-            Long value = mPair.getValue();
-            timeTaken.put(host, new Pair<Long, Long>(new Long(lastExecutionTime) + key, new Long(1) + value));
+        if(totalTimeTaken.containsKey(host)){
+            totalTimeTaken.put(host , totalTimeTaken.get(host) + new Long(lastExecutionTime));
+            totalTask.put(host, totalTask.get(host) + new Long(1));
         }else{
-            timeTaken.put(host, new Pair<Long, Long>(new Long(lastExecutionTime), new Long(1)));
+            totalTimeTaken.put(host , new Long(lastExecutionTime));
+            totalTask.put(host, new Long(1));
         }
 
-        LOG.info(host + " : " + timeTaken.get(host).toString());
+        LOG.info(host + " : " + totalTask.get(host).toString());
 
     }
 
