@@ -3,11 +3,11 @@ package edu.berkeley.sparrow.daemon.scheduler;
 
 import edu.berkeley.sparrow.daemon.util.Logging;
 import edu.berkeley.sparrow.thrift.THostPort;
-import javafx.util.Pair;
+
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.Map;
+
 
 public class DynamicScheduler {
 
