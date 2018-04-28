@@ -73,8 +73,13 @@ public class DynamicScheduler {
         LOG.info(Logging.functionCall(requestId,lastExecutionTime));
         if(taskStatus.containsKey(requestId)){
             THostPort host = taskStatus.get(requestId);
-            totalTimeTaken.put(taskStatus.get(requestId) , totalTimeTaken.get(host) + new Long(lastExecutionTime));
-            totalTask.put(host, totalTask.get(host) + new Long(1));
+            if(totalTimeTaken.containsKey(host)) {
+                totalTimeTaken.put(host, totalTimeTaken.get(host) + new Long(lastExecutionTime));
+                totalTask.put(host, totalTask.get(host) + new Long(1));
+            }else{
+                totalTimeTaken.put(host, new Long(lastExecutionTime));
+                totalTask.put(host,   new Long(1));
+            }
             LOG.info("addTimeTaken : " + totalTimeTaken.get(host).toString() + ", "  + totalTask.get(host).toString());
         }else{
 
