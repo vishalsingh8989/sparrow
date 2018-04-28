@@ -478,7 +478,7 @@ public class Scheduler {
 
 
         if (status != -1){
-            mDynamicScheduler.addTimeTaken(taskId.schedulerAddress, status);
+            mDynamicScheduler.addTimeTaken(taskId.requestId, status);
         }
         InetSocketAddress frontend = frontendSockets.get(app);
         if (frontend == null) {

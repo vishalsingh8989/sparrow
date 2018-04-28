@@ -6,6 +6,7 @@ import edu.berkeley.sparrow.thrift.THostPort;
 
 import org.apache.log4j.Logger;
 
+import java.security.KeyException;
 import java.util.HashMap;
 
 
@@ -27,10 +28,7 @@ public class DynamicScheduler {
      * map worker machine vs (total time taken , total jobs)
      */
     private HashMap<THostPort,Long> totalTimeTaken = new HashMap<THostPort,Long>();
-
     private HashMap<THostPort,Long> totalTask = new HashMap<THostPort,Long>();
-
-
 
 
     /**
@@ -71,17 +69,18 @@ public class DynamicScheduler {
      * @param lastExecutionTime: time taken by worker machine to execute last task
      */
 
-    public  void addTimeTaken(THostPort host,  long lastExecutionTime){
-        LOG.info(Logging.functionCall(host,lastExecutionTime));
-        if(totalTimeTaken.containsKey(host)){
-            totalTimeTaken.put(host , totalTimeTaken.get(host) + new Long(lastExecutionTime));
+    public  void addTimeTaken(String requestId,  long lastExecutionTime){
+        LOG.info(Logging.functionCall(requestId,lastExecutionTime));
+        if(taskStatus.containsKey(requestId)){
+            THostPort host = taskStatus.get(requestId);
+            totalTimeTaken.put(taskStatus.get(requestId) , totalTimeTaken.get(host) + new Long(lastExecutionTime));
             totalTask.put(host, totalTask.get(host) + new Long(1));
+            LOG.info("addTimeTaken : " + totalTimeTaken.get(host).toString() + ", "  + totalTask.get(host).toString());
         }else{
-            totalTimeTaken.put(host , new Long(lastExecutionTime));
-            totalTask.put(host, new Long(1));
+
         }
 
-        LOG.info(host + " : " + totalTask.get(host).toString());
+
 
     }
 
