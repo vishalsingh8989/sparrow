@@ -258,15 +258,15 @@ public class ProtoFrontend implements FrontendService.Iface {
           SchedulerThrift.DEFAULT_SCHEDULER_THRIFT_PORT);
       client.initialize(new InetSocketAddress("localhost", schedulerPort), APPLICATION_ID, this);
 
-      if (warmupDurationS > 0) {
-        LOG.debug("Warming up for " + warmupDurationS + " seconds at arrival rate of " +
-                  warmupLambda + " jobs per second");
-        launchTasks(users, warmupLambda, warmupDurationS, tasksPerJob, numPreferredNodes,
-            benchmarkIterations, benchmarkId, backends, client);
-        LOG.debug("Waiting for queues to drain after warmup (waiting " + postWarmupS +
-                 " seconds)");
-        Thread.sleep(postWarmupS * 1000);
-      }
+//      if (warmupDurationS > 0) {
+//        LOG.debug("Warming up for " + warmupDurationS + " seconds at arrival rate of " +
+//                  warmupLambda + " jobs per second");
+//        launchTasks(users, warmupLambda, warmupDurationS, tasksPerJob, numPreferredNodes,
+//            benchmarkIterations, benchmarkId, backends, client);
+//        LOG.debug("Waiting for queues to drain after warmup (waiting " + postWarmupS +
+//                 " seconds)");
+//        Thread.sleep(postWarmupS * 1000);
+//      }
       LOG.debug("Launching experiment for " + experimentDurationS + " seconds");
       launchTasks(users, lambda, experimentDurationS, tasksPerJob, numPreferredNodes,
           benchmarkIterations, benchmarkId, backends, client);
@@ -300,7 +300,7 @@ public class ProtoFrontend implements FrontendService.Iface {
     int userIndex = 0; // Used to determine which user's task to run next.
 
     int idx = 0;
-    while(idx <  4){
+    while(idx <  500){
     //while (System.currentTimeMillis() < end) {
       // Lambda is the arrival rate in S, so we need to multiply the result here by
       // 1000 to convert to ms.

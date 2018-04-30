@@ -3,11 +3,11 @@ package edu.berkeley.sparrow.daemon.scheduler;
 
 import edu.berkeley.sparrow.daemon.util.Logging;
 import edu.berkeley.sparrow.thrift.THostPort;
-
 import org.apache.log4j.Logger;
 
-import java.security.KeyException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class DynamicScheduler {
@@ -18,6 +18,7 @@ public class DynamicScheduler {
 
     private static final Logger LOG = Logger.getLogger(DynamicScheduler.class);
     public static  DynamicScheduler mDynamicScheduler = null;
+    private ArrayList<THostPort> backends = new ArrayList<THostPort>();
 
     /**
      * placeholder for requestID , backends.
@@ -80,11 +81,15 @@ public class DynamicScheduler {
                 totalTimeTaken.put(host, new Long(lastExecutionTime));
                 totalTask.put(host,   new Long(1));
             }
-            LOG.info("addTimeTaken : " + totalTimeTaken.get(host).toString() + ", "  + totalTask.get(host).toString());
+            LOG.info("addTimeTaken : "  + host + " : " + totalTimeTaken.get(host).toString() + ", "  + totalTask.get(host).toString());
         }else{
 
         }
 
+        LOG.info("backends : " + totalTimeTaken.size() );
+        for(Map.Entry<THostPort, Long> entry :  totalTimeTaken.entrySet()){
+            LOG.info( entry.getKey() + " : " + entry.getValue() + " : " + ((float)entry.getValue()/(float)totalTask.get(entry.getKey())));
+        }
 
 
     }
