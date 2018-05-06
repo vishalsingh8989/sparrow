@@ -92,4 +92,7 @@ public class SparrowConf {
   
   public final static String SPREAD_EVENLY_TASK_SET_SIZE = "spread_evenly_task_set_size";
   public final static int DEFAULT_SPREAD_EVENLY_TASK_SET_SIZE = 1;
+
+  public final static String DYNAMIC_PROBING_SELECTION_ON = "dynamic_probing_selection_on";
+  public final static boolean DEFAULT_DYNAMIC_PROBING_SELECTION_ON = false;
 }

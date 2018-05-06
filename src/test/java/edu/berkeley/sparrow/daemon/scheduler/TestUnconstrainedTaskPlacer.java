@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.BasicConfigurator;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +44,7 @@ import edu.berkeley.sparrow.thrift.TTaskLaunchSpec;
 import edu.berkeley.sparrow.thrift.TTaskSpec;
 import edu.berkeley.sparrow.thrift.TUserGroupInfo;
 
+
 public class TestUnconstrainedTaskPlacer {
   private static final String APP_ID = "test app";
   private static final String USER = "user";
@@ -55,6 +58,7 @@ public class TestUnconstrainedTaskPlacer {
   private static List<TTaskSpec> tasks;
   Set<String> taskIds;
   private static List<InetSocketAddress> backendNodes;
+  private Configuration conf;
 
   @Before
   public void setUp() throws Exception {
@@ -92,11 +96,14 @@ public class TestUnconstrainedTaskPlacer {
       tasks.add(new TTaskSpec(id, placementPreference, message));
     }
 
+
+
+
     TSchedulingRequest schedulingRequest = new TSchedulingRequest(APP_ID, tasks, user);
     
     final int NUM_ITERATIONS = 100;
     for (int i = 0; i < NUM_ITERATIONS; ++i) {
-      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO);
+      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO, conf);
 
       Map<InetSocketAddress, TEnqueueTaskReservationsRequest> requests =
           taskPlacer.getEnqueueTaskReservationsRequests(schedulingRequest, REQUEST_ID, backendNodes,
@@ -132,7 +139,7 @@ public class TestUnconstrainedTaskPlacer {
 
     final int NUM_ITERATIONS = 100;
     for (int i = 0; i < NUM_ITERATIONS; ++i) {
-      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO);
+      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO, conf);
 
       Map<InetSocketAddress, TEnqueueTaskReservationsRequest> requests =
           taskPlacer.getEnqueueTaskReservationsRequests(schedulingRequest, REQUEST_ID, backendNodes,
@@ -166,7 +173,7 @@ public class TestUnconstrainedTaskPlacer {
     final int numIterations = 100;
     final int expectedReservations = 3;
     for (int i = 0; i < numIterations; ++i) {
-      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO);
+      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO, conf);
 
       Map<InetSocketAddress, TEnqueueTaskReservationsRequest> requests =
           taskPlacer.getEnqueueTaskReservationsRequests(schedulingRequest, REQUEST_ID, backendNodes,
@@ -209,7 +216,7 @@ public class TestUnconstrainedTaskPlacer {
     final int numIterations = 100;
     final int expectedReservations = 3;
     for (int i = 0; i < numIterations; ++i) {
-      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO);
+      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO, conf);
 
       Map<InetSocketAddress, TEnqueueTaskReservationsRequest> requests =
           taskPlacer.getEnqueueTaskReservationsRequests(schedulingRequest, REQUEST_ID, backendNodes,
@@ -249,7 +256,7 @@ public class TestUnconstrainedTaskPlacer {
 
     final int numIterations = 100;
     for (int i = 0; i < numIterations; ++i) {
-      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO);
+      UnconstrainedTaskPlacer taskPlacer = new UnconstrainedTaskPlacer(REQUEST_ID, PROBE_RATIO, conf);
       Map<InetSocketAddress, TEnqueueTaskReservationsRequest> requests =
           taskPlacer.getEnqueueTaskReservationsRequests(schedulingRequest, REQUEST_ID, backendNodes,
               SCHEDULER_ADDRESS);

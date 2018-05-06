@@ -17,16 +17,10 @@
 package edu.berkeley.sparrow.daemon.scheduler;
 
 import java.net.InetSocketAddress;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.configuration.Configuration;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -37,6 +31,8 @@ import edu.berkeley.sparrow.thrift.THostPort;
 import edu.berkeley.sparrow.thrift.TSchedulingRequest;
 import edu.berkeley.sparrow.thrift.TTaskLaunchSpec;
 import edu.berkeley.sparrow.thrift.TTaskSpec;
+import edu.berkeley.sparrow.daemon.SparrowConf;
+import edu.berkeley.sparrow.daemon.scheduler.DynamicScheduler;
 
 /**
  * A task placer for jobs whose tasks have no placement constraints.
@@ -63,14 +59,40 @@ public class UnconstrainedTaskPlacer implements TaskPlacer {
   String requestId;
 
   private double probeRatio;
+   
+  private Configuration conf;
+  private DynamicScheduler mDynamicScheduler = DynamicScheduler.getInstance();
 
-  UnconstrainedTaskPlacer(String requestId, double probeRatio) {
+
+  UnconstrainedTaskPlacer(String requestId, double probeRatio, Configuration conf) {
     this.requestId = requestId;
     this.probeRatio = probeRatio;
     unlaunchedTasks = new LinkedList<TTaskLaunchSpec>();
     outstandingReservations = new HashMap<THostPort, Integer>();
     cancelled = false;
+    this.conf = conf;
   }
+
+
+  /**
+   * Put logic here to select nodes from given backend list to which probe needs
+   * to be sent. Filtering logic should be intelligent enough which predicts nodes
+   * which might respond probe request quickly out of all available backends.
+   */
+    public ArrayList<InetSocketAddress> getNodeList(int reservationsToLaunch) {
+
+        LOG.info(Logging.functionCall(reservationsToLaunch));
+      ArrayList<InetSocketAddress> nodeList = new ArrayList<InetSocketAddress>();
+      ArrayList<THostPort> nodes = mDynamicScheduler.getBackends(reservationsToLaunch);
+
+      for (THostPort host : nodes){
+        InetSocketAddress schedulerAddress = new InetSocketAddress(
+                host.host, host.port);
+        nodeList.add(schedulerAddress);
+        LOG.info("getNodeList : " + schedulerAddress);
+        }
+      return nodeList;
+    }
 
   @Override
   public Map<InetSocketAddress, TEnqueueTaskReservationsRequest>
@@ -86,9 +108,22 @@ public class UnconstrainedTaskPlacer implements TaskPlacer {
 
     // Get a random subset of nodes by shuffling list.
     List<InetSocketAddress> nodeList = Lists.newArrayList(nodes);
-    Collections.shuffle(nodeList);
-    if (reservationsToLaunch < nodeList.size())
-      nodeList = nodeList.subList(0, reservationsToLaunch);
+    
+    boolean dynamicProbingOn = conf.getBoolean(SparrowConf.DYNAMIC_PROBING_SELECTION_ON,
+                                               SparrowConf.DEFAULT_DYNAMIC_PROBING_SELECTION_ON);
+    if (!dynamicProbingOn) {
+        LOG.debug("Getting default random node list for probing.");
+        Collections.shuffle(nodeList);
+        if (reservationsToLaunch < nodeList.size())
+          nodeList = nodeList.subList(0, reservationsToLaunch);
+    } else {
+        LOG.debug("Getting node list which needs to be probed dynamically.");
+        nodeList = getNodeList(reservationsToLaunch);
+        //nodeList = nodeList.subList(0, reservationsToLaunch);
+        if (nodeList.size() < reservationsToLaunch) {
+            throw new IllegalArgumentException("Dynamic node list provided is of size " + nodeList.size() + ". Provide backends list of atleast size :" + reservationsToLaunch);
+        }
+    }
 
     for (TTaskSpec task : schedulingRequest.getTasks()) {
       TTaskLaunchSpec taskLaunchSpec = new TTaskLaunchSpec(task.getTaskId(),
